@@ -1,20 +1,17 @@
-package app
+package router
 
 import (
 	"github.com/gin-gonic/gin"
-	//"fmt"
 )
 
-//var (
-	//app = gin.Default()
-//)
-
-//func Run(hostname string) {
-	//getRoutes()
-	//app.Run(hostname)
-//}
 
 func GetRoutes(app *gin.Engine) {
-	v1 := app.Group("/v1")
-	addPingRoutes(v1)
+	api := app.Group("/api")
+	addApiRoutes(api)
+}
+
+func addApiRoutes(rt *gin.RouterGroup) {
+	v1 := rt.Group("/v1")
+	addCategoryRoutes(v1)
+	addItemRoutes(v1)
 }

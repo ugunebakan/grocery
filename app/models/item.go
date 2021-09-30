@@ -1,15 +1,13 @@
 package models
 
-
-type Category struct {
-  ID     int   `json:"id" gorm:"primary_key"`
-  Name  string `json:"name"`
-}
+import (
+	"github.com/satori/go.uuid"
+)
 
 type Item struct {
-  ID     int   `json:"id" gorm:"primary_key"`
-  Name  string `json:"name"`
+  Base
+  Name  string `json:"name" gorm:"type:varchar(100) not null;unique;index"`
   Bought bool `json:"bought"`
-  CategoryID int `json:"category_id"`
-  Category Category
+  CategoryID uuid.UUID `json:"category_id"`
+  Category Category `gorm:"foreignKey:CategoryID; references:ID"`
 }
