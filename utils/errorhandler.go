@@ -25,14 +25,14 @@ Routine	string
 }
 
 type Error struct {
-	Detail string `json="detail"`
+	Detail string `json:"detail"`
 }
 
 func HandleSQLError (err interface{}) (expError Error) {
 		var sqlError SQLError
 		byteError, _ := json.Marshal(err)
 		json.Unmarshal(byteError, &sqlError)
-		expError = Error{detail: sqlError.Detail}
+		expError = Error{Detail: sqlError.Detail}
 		return expError
 }
 
