@@ -14,4 +14,5 @@ func addApiRoutes(rt *gin.RouterGroup) {
 	v1 := rt.Group("/v1")
 	addCategoryRoutes(v1)
 	addItemRoutes(v1)
+	addShoppingListRoutes(v1)
 }
