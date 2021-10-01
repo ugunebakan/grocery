@@ -5,9 +5,9 @@ import (
 )
 
 type Item struct {
-  Base
-  Name  string `json:"name" gorm:"type:varchar(100) not null;unique;index"`
-  Bought bool `json:"bought"`
-  CategoryID uuid.UUID `json:"category_id"`
-  Category Category `gorm:"foreignKey:CategoryID; references:ID"`
+	Base
+	Name       string    `json:"name" gorm:"type:varchar(100) not null;unique;index"`
+	Bought     bool      `json:"bought"`
+	CategoryID uuid.UUID `json:"category_id"`
+	Category   Category  `gorm:"foreignKey:CategoryID; references:ID"`
 }

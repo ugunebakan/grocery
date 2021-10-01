@@ -7,17 +7,17 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	swaggerfiles "github.com/swaggo/files"
-        ginSwagger "github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
-	"../app/routes"
 	"../app/models"
-	_ "../docs"	
+	"../app/routes"
+	_ "../docs"
 )
 
-func InitHost()(string){
+func InitHost() string {
 	port := os.Getenv("PORT")
 	if port == "" {
-		 port = "3000"
+		port = "3000"
 	}
 	hostname := os.Getenv("HOSTNAME")
 	if hostname == "" {
@@ -26,7 +26,6 @@ func InitHost()(string){
 
 	return hostname + ":" + port
 }
-
 
 // @title Swagger Example API
 // @version 1.0
@@ -85,9 +84,8 @@ func main() {
 	models.ConnectDataBase()
 	s := gin.Default()
 	router.GetRoutes(s)
-	url := ginSwagger.URL("http://localhost:8000/swagger/doc.json") 
+	url := ginSwagger.URL("http://localhost:8000/swagger/doc.json")
 	s.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler, url))
 	s.Run(InitHost())
-
 
 }

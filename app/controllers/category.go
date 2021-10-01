@@ -9,40 +9,40 @@ import (
 
 // Item...
 type Item struct {
-	ID string
-	Name string
-	Bought bool
+	ID         string
+	Name       string
+	Bought     bool
 	CategoryID string
 }
 
 //Category..
 type Category struct {
-	ID string
-	Name string
+	ID             string
+	Name           string
 	ShoppingListID string
-	Items []Item
-
+	Items          []Item
 }
 
-func CategoryGET(c *gin.Context){
+func CategoryGET(c *gin.Context) {
 	var categoryGet []Category
 	models.DB.Preload("Items").Find(&categoryGet)
 	c.JSON(http.StatusOK, categoryGet)
 }
 
-func CategoryPOST(c *gin.Context){
+func CategoryPOST(c *gin.Context) {
 	var categoryInput models.Category
 	c.BindJSON(&categoryInput)
-	categoryPost := models.Category{Name: categoryInput.Name, ShoppingListID: categoryInput.ShoppingListID }
+	categoryPost := models.Category{Name: categoryInput.Name, ShoppingListID: categoryInput.ShoppingListID}
 	models.DB.Create(&categoryPost)
 	c.JSON(http.StatusCreated, categoryPost)
 }
 
-func CategoryRETRIEVE(c *gin.Context){
+func CategoryRETRIEVE(c *gin.Context) {
 	var categoryRetrieve models.Category
 	models.DB.Where("id = ?", c.Param("id")).First(&categoryRetrieve)
 	c.JSON(http.StatusOK, categoryRetrieve)
 }
+
 // @BasePath /api/v1
 
 // PingExample godoc

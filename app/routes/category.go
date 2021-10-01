@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
 	"../controllers"
+	"github.com/gin-gonic/gin"
 )
 
 func addCategoryRoutes(rg *gin.RouterGroup) {

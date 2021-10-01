@@ -8,13 +8,12 @@ import (
 )
 
 type ShoppingList struct {
-	ID string
-	Name string
+	ID         string
+	Name       string
 	Categories *[]Category
 }
 
-
-func ShoppingListGET(c *gin.Context){
+func ShoppingListGET(c *gin.Context) {
 	var shoppingList []ShoppingList
 	models.DB.Preload("Categories.Items").Preload("Categories").Find(&shoppingList)
 	c.JSON(http.StatusOK, shoppingList)
@@ -24,7 +23,7 @@ type ShoppingListPaylod struct {
 	Name string
 }
 
-func ShoppingListPOST(c *gin.Context){
+func ShoppingListPOST(c *gin.Context) {
 	var shoppingList ShoppingListPaylod
 	c.BindJSON(&shoppingList)
 	shoppingListPost := models.ShoppingList{Name: shoppingList.Name}
