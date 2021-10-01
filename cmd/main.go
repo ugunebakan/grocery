@@ -76,7 +76,8 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	env := os.Getenv("ENVIRONMENT")
+	var env string
+	env = os.Getenv("ENVIRONMENT")
 	if "" == env {
 		env = "development"
 	}
@@ -86,6 +87,9 @@ func main() {
 	router.GetRoutes(s)
 	url := ginSwagger.URL("http://localhost:8000/swagger/doc.json")
 	s.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler, url))
-	s.Run(InitHost())
+	err = s.Run(InitHost())
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }

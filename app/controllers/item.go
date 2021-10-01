@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 
 	"../../utils"
@@ -16,7 +17,10 @@ func ItemGET(c *gin.Context) {
 
 func ItemPOST(c *gin.Context) {
 	var itemInput models.Item
-	c.BindJSON(&itemInput)
+	err := c.BindJSON(&itemInput)
+	if err != nil {
+		log.Fatal(err)
+	}
 	itemPost := models.Item{Name: itemInput.Name, CategoryID: itemInput.CategoryID}
 	if err := models.DB.Create(&itemPost).Error; err != nil {
 		umut := util.HandleSQLError(err)

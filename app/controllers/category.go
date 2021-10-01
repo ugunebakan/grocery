@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 
 	"../models"
@@ -31,7 +32,10 @@ func CategoryGET(c *gin.Context) {
 
 func CategoryPOST(c *gin.Context) {
 	var categoryInput models.Category
-	c.BindJSON(&categoryInput)
+	err := c.BindJSON(&categoryInput)
+	if err != nil {
+		log.Fatal(err)
+	}
 	categoryPost := models.Category{Name: categoryInput.Name, ShoppingListID: categoryInput.ShoppingListID}
 	models.DB.Create(&categoryPost)
 	c.JSON(http.StatusCreated, categoryPost)

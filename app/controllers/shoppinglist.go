@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 
 	"../models"
@@ -25,7 +26,10 @@ type ShoppingListPaylod struct {
 
 func ShoppingListPOST(c *gin.Context) {
 	var shoppingList ShoppingListPaylod
-	c.BindJSON(&shoppingList)
+	err := c.BindJSON(&shoppingList)
+	if err != nil {
+		log.Fatal(err)
+	}
 	shoppingListPost := models.ShoppingList{Name: shoppingList.Name}
 	models.DB.Create(&shoppingListPost)
 	c.JSON(http.StatusCreated, &shoppingListPost)
