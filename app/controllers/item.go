@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"../../utils"
+	"../../utils/sql"
 	"../models"
 	"github.com/gin-gonic/gin"
 )

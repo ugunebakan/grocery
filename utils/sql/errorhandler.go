@@ -35,7 +35,7 @@ func HandleSQLError(errData interface{}) (expError Error) {
 	byteError, _ = json.Marshal(errData)
 	err := json.Unmarshal(byteError, &sqlError)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 	expError = Error{Detail: sqlError.Detail}
 	return expError
