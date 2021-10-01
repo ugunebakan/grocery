@@ -5,14 +5,14 @@ import (
 	"net/http"
 
 	"../../utils/sql"
+	responseUtil "../../utils/response"
 	"../models"
 	"github.com/gin-gonic/gin"
 )
 
 func ItemGET(c *gin.Context) {
-	var ItemGet []models.Item
-	models.DB.Find(&ItemGet)
-	c.JSON(http.StatusOK, ItemGet)
+	items, err := models.GetAllItems()
+	responseUtil.ResponseHandler(c, items, err, 200)
 }
 
 func ItemPOST(c *gin.Context) {

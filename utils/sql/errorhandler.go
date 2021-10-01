@@ -27,6 +27,7 @@ type SQLError struct {
 
 type Error struct {
 	Detail string `json:"detail"`
+	Message string `json:"message"`
 }
 
 func HandleSQLError(errData interface{}) (expError Error) {
@@ -37,6 +38,6 @@ func HandleSQLError(errData interface{}) (expError Error) {
 	if err != nil {
 		log.Print(err)
 	}
-	expError = Error{Detail: sqlError.Detail}
+	expError = Error{Detail: sqlError.Detail, Message: sqlError.Message}
 	return expError
 }

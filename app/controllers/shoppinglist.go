@@ -5,19 +5,14 @@ import (
 	"net/http"
 
 	"../models"
+	responseUtil "../../utils/response"
 	"github.com/gin-gonic/gin"
 )
 
-type ShoppingList struct {
-	ID         string
-	Name       string
-	Categories *[]Category
-}
 
 func ShoppingListGET(c *gin.Context) {
-	var shoppingList []ShoppingList
-	models.DB.Preload("Categories.Items").Preload("Categories").Find(&shoppingList)
-	c.JSON(http.StatusOK, shoppingList)
+	data, err := models.GetAllShoppingLists()
+	responseUtil.ResponseHandler(c, data, err, 200)
 }
 
 type ShoppingListPaylod struct {
