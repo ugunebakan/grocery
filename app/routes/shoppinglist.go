@@ -6,8 +6,8 @@ import (
 )
 
 func addShoppingListRoutes(rg *gin.RouterGroup) {
-	item := rg.Group("/shoppinglist")
-	item.GET("/", controller.ShoppingListGET)
-	//item.POST("/", controller.ItemPOST)
+	shoppinglist := rg.Group("/shoppinglist")
+	shoppinglist.GET("/", controller.ShoppingListGET)
+	shoppinglist.POST("/", controller.ShoppingListPOST)
 	//item.GET("/:id", controller.CategoryRETRIEVE)
 }

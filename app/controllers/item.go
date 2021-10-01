@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"../models"
+	"../../utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,6 +19,10 @@ func ItemPOST(c *gin.Context){
 	var itemInput models.Item
 	c.BindJSON(&itemInput)
 	itemPost := models.Item{Name: itemInput.Name, CategoryID: itemInput.CategoryID}
-	models.DB.Create(&itemPost)
-	c.JSON(http.StatusCreated, &itemPost)
+	if err := models.DB.Create(&itemPost).Error; err != nil {
+		umut := util.HandleSQLError(err)
+		c.JSON(http.StatusBadRequest, umut)
+	} else {
+		c.JSON(http.StatusCreated, &itemPost)
+	}
 }

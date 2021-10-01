@@ -10,20 +10,24 @@ import (
 type ShoppingList struct {
 	ID string
 	Name string
-	Categories []Category
+	Categories *[]Category
 }
 
 
 func ShoppingListGET(c *gin.Context){
-	var shoppingList ShoppingList
+	var shoppingList []ShoppingList
 	models.DB.Preload("Categories.Items").Preload("Categories").Find(&shoppingList)
 	c.JSON(http.StatusOK, shoppingList)
 }
 
-//func ItemPOST(c *gin.Context){
-	//var itemInput models.Item
-	//c.BindJSON(&itemInput)
-	//itemPost := models.Item{Name: itemInput.Name, CategoryID: itemInput.CategoryID}
-	//models.DB.Create(&itemPost)
-	//c.JSON(http.StatusCreated, &itemPost)
-//}
+type ShoppingListPaylod struct {
+	Name string
+}
+
+func ShoppingListPOST(c *gin.Context){
+	var shoppingList ShoppingListPaylod
+	c.BindJSON(&shoppingList)
+	shoppingListPost := models.ShoppingList{Name: shoppingList.Name}
+	models.DB.Create(&shoppingListPost)
+	c.JSON(http.StatusCreated, &shoppingListPost)
+}
