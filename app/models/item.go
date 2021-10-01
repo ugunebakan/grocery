@@ -1,9 +1,9 @@
 package models
 
 import (
+	"../../utils/sql"
 	"encoding/json"
 	"github.com/satori/go.uuid"
-	"../../utils/sql"
 )
 
 type Item struct {
@@ -14,10 +14,9 @@ type Item struct {
 	Category   Category  `gorm:"foreignKey:CategoryID; references:ID"`
 }
 
-
-func GetAllItems()(output []byte, errMsg []byte){
+func GetAllItems() (output []byte, errMsg []byte) {
 	var items []Item
-	if err := DB.Find(&items).Error; err !=nil {
+	if err := DB.Find(&items).Error; err != nil {
 		errX := util.HandleSQLError(err)
 		errMsg, _ = json.Marshal(errX)
 		return nil, errMsg

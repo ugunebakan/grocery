@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"../../utils/sql"
 	responseUtil "../../utils/response"
+	"../../utils/sql"
 	"../models"
 	"github.com/gin-gonic/gin"
 )

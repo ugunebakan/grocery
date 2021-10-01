@@ -1,14 +1,11 @@
 package controller
 
 import (
-	"log"
-	"net/http"
-
-	"../models"
 	responseUtil "../../utils/response"
+	"../models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
-
 
 func ShoppingListGET(c *gin.Context) {
 	data, err := models.GetAllShoppingLists()
@@ -16,16 +13,32 @@ func ShoppingListGET(c *gin.Context) {
 }
 
 type ShoppingListPaylod struct {
-	Name string
+	Name string `json:"name" binding:"required"`
 }
 
 func ShoppingListPOST(c *gin.Context) {
-	var shoppingList ShoppingListPaylod
-	err := c.BindJSON(&shoppingList)
-	if err != nil {
-		log.Fatal(err)
+	var sl ShoppingListPaylod
+	c.BindJSON(&sl)
+
+	m := models.ShoppingList{
+		Name: sl.Name,
 	}
-	shoppingListPost := models.ShoppingList{Name: shoppingList.Name}
-	models.DB.Create(&shoppingListPost)
-	c.JSON(http.StatusCreated, &shoppingListPost)
+
+	data, err := m.CreateShoppingList()
+	responseUtil.ResponseHandler(c, data, err, 201)
+}
+
+func ShoppingListPUT(c *gin.Context) {
+	var sl ShoppingListPaylod
+	id := c.Param("id")
+	fmt.Printf("%T", id)
+	fmt.Print("\n\n")
+	c.BindJSON(&sl)
+
+	m := models.ShoppingList{
+		Name: sl.Name,
+	}
+
+	data, err := m.UpdateShoppingList(id)
+	responseUtil.ResponseHandler(c, data, err, 201)
 }

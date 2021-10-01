@@ -26,7 +26,7 @@ type SQLError struct {
 }
 
 type Error struct {
-	Detail string `json:"detail"`
+	Detail  string `json:"detail"`
 	Message string `json:"message"`
 }
 
