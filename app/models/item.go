@@ -11,7 +11,7 @@ type Item struct {
 	Name       string    `json:"name" gorm:"type:varchar(100) not null;unique;index"`
 	Bought     bool      `json:"bought"`
 	CategoryID uuid.UUID `json:"category_id"`
-	Category   Category  `gorm:"foreignKey:CategoryID; references:ID"`
+	Category   Category  `gorm:"foreignKey:CategoryID; references:ID" json:"category"`
 }
 
 func GetAllItems() (output []byte, errMsg []byte) {

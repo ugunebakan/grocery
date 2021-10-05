@@ -42,3 +42,15 @@ func ShoppingListPUT(c *gin.Context) {
 	data, err := m.UpdateShoppingList(id)
 	responseUtil.ResponseHandler(c, data, err, 201)
 }
+
+func ShoppingListOneGET(c *gin.Context) {
+	id := c.Param("id")
+
+	m := models.ShoppingList{}
+	data, err := m.GetOneShoppingListsAsTree(id)
+	if err != nil {
+		responseUtil.ResponseHandler(c, data, err, 404)
+	} else {
+		responseUtil.ResponseHandler(c, data, err, 200)
+	}
+}
